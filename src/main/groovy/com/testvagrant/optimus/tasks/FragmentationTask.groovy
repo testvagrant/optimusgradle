@@ -55,7 +55,7 @@ class FragmentationTask extends DefaultTask {
                     }
                 }
             } catch (Exception e) {
-
+                e.printStackTrace()
             }
         }
 

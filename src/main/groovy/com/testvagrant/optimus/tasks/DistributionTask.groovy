@@ -12,9 +12,6 @@ import org.gradle.api.tasks.TaskAction
 
 
 class DistributionTask extends DefaultTask {
-
-    private OptimusExtension optimusExtension;
-    private ReportingExtension reportingExtension;
     private Collection<File> featureFiles = new ArrayList<>();
 
     public DistributionTask() {
@@ -24,8 +21,8 @@ class DistributionTask extends DefaultTask {
 
     @TaskAction
     def runDistribution() {
-        optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
-        reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
+        OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
+        ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
         OptimusSetup optimusSetup = new OptimusSetup();
         optimusSetup.setup()
         def udidList = optimusSetup.getDevicesForThisRun(project,optimusExtension.testFeed)
@@ -34,14 +31,14 @@ class DistributionTask extends DefaultTask {
         List<File> featureFilesList = featureFilter.collectAllFeatureFilesInProject(getProject().getProjectDir().listFiles());
         featureFiles = featureFilter.getFilteredFeatures(featureFilesList);
         featureFiles.forEach({file -> System.out.println(file.getName())});
-        runFunctionalDistribution(udidList,featureFiles);
+        runFunctionalDistribution(optimusExtension,reportingExtension,udidList,featureFiles);
         new OptimusReport(project,reportingExtension).generateReport(false);
     }
 
 
 
 
-    def runFunctionalDistribution(List<String> udidList, List<File> allFiles) {
+    def runFunctionalDistribution(OptimusExtension optimusExtension, ReportingExtension reportingExtension,List<String> udidList, List<File> allFiles) {
         def size = udidList.size()
         println "pool size -- " + size
         GParsPool.withPool(size) {
@@ -60,7 +57,7 @@ class DistributionTask extends DefaultTask {
                     }
                 }
             } catch (Exception e) {
-
+                e.printStackTrace()
             }
         }
     }
