@@ -1,15 +1,15 @@
 package com.testvagrant.optimus.utils
 
-import com.testvagrant.monitor.MongoMain
 import com.testvagrant.optimus.helpers.DeviceHelper
 import com.testvagrant.optimus.register.DeviceRegistrar
 import org.gradle.api.Project
-
+import redis.embedded.RedisServer
 
 class OptimusSetup {
 
     def setup() {
-        MongoMain.main()
+        killRedisServer()
+        startRedisServer()
         new DeviceRegistrar().setUpDevices(new DeviceMatrix());
     }
 
@@ -35,5 +35,15 @@ class OptimusSetup {
         List<String> tagsList = Arrays.asList(tags.split(","));
         tagsList.stream().forEach({item -> item.toString().replaceAll("\\s","")});
         return tagsList;
+    }
+
+
+    static def killRedisServer() {
+        "redis-cli shutdown".execute()
+    }
+
+    static def startRedisServer() {
+        RedisServer redisServer = new RedisServer();
+        redisServer.start()
     }
 }

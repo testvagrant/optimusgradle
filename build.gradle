@@ -1,5 +1,5 @@
 group 'com.testvagrant.optimus'
-version '1.0'
+version '1.0.1'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -41,11 +41,8 @@ buildscript {
 
 
 dependencies {
-    compile('com.testvagrant.optimus:optimus:1.0-SNAPSHOT') {
-        changing true
-    }
-
-    compile('com.testvagrant.optimusMonitor:optimusMonitor:1.0-SNAPSHOT')
+    compile 'com.testvagrant:optimus:1.+'
+    compile group: 'com.github.kstyrc', name: 'embedded-redis', version: '0.6'
     compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
     compile group: 'info.cukes', name: 'cucumber-junit', version: "1.2.5"
     compile group: 'info.cukes', name: 'cucumber-core', version: "1.2.5"
