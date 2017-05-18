@@ -4,6 +4,7 @@ import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.FeatureFilter
 import com.testvagrant.optimus.utils.OptimusReport
 import com.testvagrant.optimus.utils.OptimusSetup
+import com.testvagrant.optimus.utils.OptimusTearDown
 import groovyx.gpars.GParsPool
 import org.gradle.api.DefaultTask
 import org.gradle.api.reporting.Reporting
@@ -33,6 +34,8 @@ class DistributionTask extends DefaultTask {
         featureFiles.forEach({file -> System.out.println(file.getName())});
         runFunctionalDistribution(optimusExtension,reportingExtension,udidList,featureFiles);
         new OptimusReport(project,reportingExtension).generateReport(false);
+        new OptimusTearDown().updateBuildRecord();
+
     }
 
 

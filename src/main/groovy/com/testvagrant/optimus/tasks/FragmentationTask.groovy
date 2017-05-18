@@ -3,6 +3,7 @@ package com.testvagrant.optimus.tasks
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.OptimusReport
 import com.testvagrant.optimus.utils.OptimusSetup
+import com.testvagrant.optimus.utils.OptimusTearDown
 import cucumber.api.cli.Main
 import groovyx.gpars.GParsPool
 import net.masterthought.cucumber.Configuration
@@ -33,6 +34,7 @@ class FragmentationTask extends DefaultTask {
         def run = optimusSetup.getDevicesForThisRun(project,optimusExtension.testFeed)
         runDeviceFragmentation(run,optimusExtension,reportingExtension);
         new OptimusReport(project,reportingExtension).generateReport(true);
+        new OptimusTearDown().updateBuildRecord();
     }
 
     def runDeviceFragmentation(List<String> udidList,OptimusExtension extension,ReportingExtension reportingExtension) {
