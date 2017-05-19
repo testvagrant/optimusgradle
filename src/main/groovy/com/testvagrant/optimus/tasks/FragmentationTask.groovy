@@ -34,7 +34,7 @@ class FragmentationTask extends DefaultTask {
         def run = optimusSetup.getDevicesForThisRun(project,optimusExtension.testFeed)
         runDeviceFragmentation(run,optimusExtension,reportingExtension);
         new OptimusReport(project,reportingExtension).generateReport(true);
-        new OptimusTearDown().updateBuildRecord();
+        OptimusTearDown.updateBuildRecord();
     }
 
     def runDeviceFragmentation(List<String> udidList,OptimusExtension extension,ReportingExtension reportingExtension) {
