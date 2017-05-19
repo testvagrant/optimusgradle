@@ -4,20 +4,15 @@ import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.OptimusReport
 import com.testvagrant.optimus.utils.OptimusSetup
 import com.testvagrant.optimus.utils.OptimusTearDown
-import cucumber.api.cli.Main
 import groovyx.gpars.GParsPool
 import net.masterthought.cucumber.Configuration
 import net.masterthought.cucumber.ReportBuilder
 import org.gradle.api.DefaultTask
-import org.gradle.api.internal.tasks.SourceSetCompileClasspath
 import org.gradle.api.reporting.Reporting
 import org.gradle.api.reporting.ReportingExtension
-import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.TaskAction
 
 import java.text.DateFormat
-
 
 class FragmentationTask extends DefaultTask {
 

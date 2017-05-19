@@ -7,10 +7,8 @@ import com.testvagrant.optimus.utils.OptimusSetup
 import com.testvagrant.optimus.utils.OptimusTearDown
 import groovyx.gpars.GParsPool
 import org.gradle.api.DefaultTask
-import org.gradle.api.reporting.Reporting
 import org.gradle.api.reporting.ReportingExtension
 import org.gradle.api.tasks.TaskAction
-
 
 class DistributionTask extends DefaultTask {
     private Collection<File> featureFiles = new ArrayList<>();

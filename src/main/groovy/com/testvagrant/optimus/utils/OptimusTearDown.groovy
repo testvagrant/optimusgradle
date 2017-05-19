@@ -1,7 +1,6 @@
 package com.testvagrant.optimus.utils
 
-import com.testvagrant.monitor.radiator.MongoWriter;
-import com.testvagrant.optimus.helpers.MongoDBHelper
+import com.testvagrant.monitor.radiator.MongoWriter
 
 class OptimusTearDown{
     static void updateBuildRecord(){
