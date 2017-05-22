@@ -31,9 +31,9 @@ class DistributionTask extends DefaultTask {
         featureFiles = featureFilter.getFilteredFeatures(featureFilesList);
         featureFiles.forEach({file -> System.out.println(file.getName())});
         runFunctionalDistribution(optimusExtension,reportingExtension,udidList,featureFiles);
-        new OptimusReport(project,reportingExtension).generateReport(false);
         OptimusTearDown.updateBuildRecord();
-
+        OptimusTearDown.teardown();
+        new OptimusReport(project,reportingExtension).generateReport(false);
     }
 
 
