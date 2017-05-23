@@ -14,7 +14,7 @@ class DistributionTask extends DefaultTask {
     private Collection<File> featureFiles = new ArrayList<>();
 
     public DistributionTask() {
-        outputs.upToDateWhen {false}
+        outputs.upToDateWhen { false }
     }
 
 
@@ -23,23 +23,21 @@ class DistributionTask extends DefaultTask {
         OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
         OptimusSetup optimusSetup = new OptimusSetup();
-        optimusSetup.setup()
-        def udidList = optimusSetup.getDevicesForThisRun(project,optimusExtension.testFeed)
+        optimusSetup.setup(optimusExtension.testFeed)
+        def udidList = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
         List<String> tags = optimusSetup.getTags(optimusExtension.tags);
         FeatureFilter featureFilter = new FeatureFilter(tags);
         List<File> featureFilesList = featureFilter.collectAllFeatureFilesInProject(getProject().getProjectDir().listFiles());
         featureFiles = featureFilter.getFilteredFeatures(featureFilesList);
-        featureFiles.forEach({file -> System.out.println(file.getName())});
-        runFunctionalDistribution(optimusExtension,reportingExtension,udidList,featureFiles);
+        featureFiles.forEach({ file -> System.out.println(file.getName()) });
+        runFunctionalDistribution(optimusExtension, reportingExtension, udidList, featureFiles);
         OptimusTearDown.updateBuildRecord();
         OptimusTearDown.teardown();
-        new OptimusReport(project,reportingExtension).generateReport(false);
+        new OptimusReport(project, reportingExtension).generateReport(false);
     }
 
 
-
-
-    def runFunctionalDistribution(OptimusExtension optimusExtension, ReportingExtension reportingExtension,List<String> udidList, List<File> allFiles) {
+    def runFunctionalDistribution(OptimusExtension optimusExtension, ReportingExtension reportingExtension, List<String> udidList, List<File> allFiles) {
         def size = udidList.size()
         println "pool size -- " + size
         GParsPool.withPool(size) {

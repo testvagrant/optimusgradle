@@ -17,7 +17,7 @@ import java.text.DateFormat
 class FragmentationTask extends DefaultTask {
 
     FragmentationTask() {
-        outputs.upToDateWhen {false};
+        outputs.upToDateWhen { false };
     }
 
     @TaskAction
@@ -25,15 +25,15 @@ class FragmentationTask extends DefaultTask {
         OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
         OptimusSetup optimusSetup = new OptimusSetup();
-        optimusSetup.setup()
-        def run = optimusSetup.getDevicesForThisRun(project,optimusExtension.testFeed)
-        runDeviceFragmentation(run,optimusExtension,reportingExtension);
+        optimusSetup.setup(optimusExtension.testFeed)
+        def run = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
+        runDeviceFragmentation(run, optimusExtension, reportingExtension);
         OptimusTearDown.updateBuildRecord();
         OptimusTearDown.teardown();
-        new OptimusReport(project,reportingExtension).generateReport(true);
+        new OptimusReport(project, reportingExtension).generateReport(true);
     }
 
-    def runDeviceFragmentation(List<String> udidList,OptimusExtension extension,ReportingExtension reportingExtension) {
+    def runDeviceFragmentation(List<String> udidList, OptimusExtension extension, ReportingExtension reportingExtension) {
         def size = udidList.size()
         println "Total devices -- " + size
         GParsPool.withPool(size) {

@@ -8,9 +8,9 @@ import org.gradle.api.Project
 
 class OptimusSetup {
 
-    def setup() {
+    def setup(String testFeed) {
         MongoMain.main()
-        new DeviceRegistrar().setUpDevices(new DeviceMatrix());
+        new DeviceRegistrar().setUpDevices(new DeviceMatrix(testFeed));
     }
 
     def List<String> getDevicesForThisRun(Project project,String testFeedName) {
