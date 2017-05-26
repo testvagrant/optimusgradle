@@ -27,6 +27,8 @@ class OptimusSetup {
     }
 
     def List<String> getTags(String tags) {
+        if(tags==null)
+            return new ArrayList<String>();
         if (!tags.contains(",")) {
             List<String> tagsList = new ArrayList<>();
             tagsList.add(tags);

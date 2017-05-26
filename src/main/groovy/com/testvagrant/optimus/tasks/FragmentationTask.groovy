@@ -42,8 +42,15 @@ class FragmentationTask extends DefaultTask {
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = extension.classpath
-                        args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
-                                "${project.projectDir}/src/test/resources/features"]
+                        if (extension.tags != null) {
+                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
+                                    "${project.projectDir}/src/test/resources/features"];
+                        }
+                        else {
+                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
+                                    "${project.projectDir}/src/test/resources/features"];
+                        }
+
                         systemProperties = [
                                 "testFeed"      : extension.testFeed,
                                 "udid"          : udid,
