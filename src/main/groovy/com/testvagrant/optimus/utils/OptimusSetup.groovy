@@ -9,7 +9,8 @@ import org.gradle.api.Project
 class OptimusSetup {
 
     def setup(String testFeed) {
-        MongoMain.main()
+        println "Executing MongoMain"
+        MongoMain.main();
         new DeviceRegistrar().setUpDevices(new DeviceMatrix(testFeed + ".json"));
     }
 
