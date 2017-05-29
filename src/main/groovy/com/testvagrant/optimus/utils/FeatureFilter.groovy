@@ -16,7 +16,12 @@ class FeatureFilter {
     }
 
     def List<File> getFilteredFeatures(List<File> featureFiles) {
-        return collectFeaturesMatchingTags(featureFiles,tags);
+        if(tags.size()==1 && tags.get(0).contains("~")) {
+            tags.get(0) == tags.get(0).substring(1)
+            return collectFeaturesNotMatchingTags(featureFiles,tags)
+        } else {
+            return collectFeaturesMatchingTags(featureFiles,tags);
+        }
     }
 
     def List<File> collectAllFeatureFilesInProject(File[] rootFile) {
@@ -30,6 +35,16 @@ class FeatureFilter {
             List<String> featureTags = formatFeatureTagList(getFeatureTags(file));
             if(featureTags.size()>0) {
                 featureTags.retainAll(tags);
+            }
+            return featureTags.size()>0;
+        }).collect(Collectors.toList());
+    }
+
+    def List<File> collectFeaturesNotMatchingTags(List<File> featureFiles,List<String> tags) {
+        return featureFiles.stream().filter({file ->
+            List<String> featureTags = formatFeatureTagList(getFeatureTags(file));
+            if(featureTags.size()>0) {
+                featureTags.removeAll(tags);
             }
             return featureTags.size()>0;
         }).collect(Collectors.toList());

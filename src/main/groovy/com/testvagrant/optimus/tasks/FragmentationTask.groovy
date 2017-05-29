@@ -35,21 +35,21 @@ class FragmentationTask extends DefaultTask {
 
     def runDeviceFragmentation(List<String> udidList, OptimusExtension extension, ReportingExtension reportingExtension) {
         def size = udidList.size()
+        def cucumberArgs
         println "Total devices -- " + size
         GParsPool.withPool(size) {
             try {
                 udidList.eachParallel { String udid ->
+                    if (extension.tags != null)
+                        cucumberArgs = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
+                                "${project.projectDir}/src/test/resources/features"];
+                    else
+                        cucumberArgs = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
+                                "${project.projectDir}/src/test/resources/features"];
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = extension.classpath
-                        if (extension.tags != null) {
-                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
-                                    "${project.projectDir}/src/test/resources/features"];
-                        }
-                        else {
-                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
-                                    "${project.projectDir}/src/test/resources/features"];
-                        }
+                        args = cucumberArgs
 
                         systemProperties = [
                                 "testFeed"      : extension.testFeed,

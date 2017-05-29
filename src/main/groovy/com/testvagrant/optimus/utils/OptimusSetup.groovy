@@ -27,14 +27,21 @@ class OptimusSetup {
     }
 
     def List<String> getTags(String tags) {
+        List<String> tagsList = new ArrayList<>();
         if(tags==null)
-            return new ArrayList<String>();
-        if (!tags.contains(",")) {
-            List<String> tagsList = new ArrayList<>();
+            return tagsList;
+        if(tags.contains("~")){
+            if(tags.contains(",")){
+                throw new Exception("Cannot pass multiple tags with ~");
+            }
             tagsList.add(tags);
             return tagsList;
         }
-        List<String> tagsList = Arrays.asList(tags.split(","));
+        if (!tags.contains(",")) {
+            tagsList.add(tags);
+            return tagsList;
+        }
+        tagsList = Arrays.asList(tags.split(","));
         tagsList.stream().forEach({ item -> item.toString().replaceAll("\\s", "") });
         return tagsList;
     }

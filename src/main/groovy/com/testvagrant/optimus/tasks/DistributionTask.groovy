@@ -45,17 +45,19 @@ class DistributionTask extends DefaultTask {
     def runFunctionalDistribution(OptimusExtension optimusExtension, ReportingExtension reportingExtension, List<String> udidList, List<File> allFiles) {
         def size = udidList.size()
         println "pool size -- " + size
+        def cucumberArgs;
         GParsPool.withPool(size) {
             try {
                 allFiles.eachParallel { File file ->
+                    if(optimusExtension.tags!=null)
+                        cucumberArgs=["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
+                                          file.toPath()]
+                    else
+                        cucumberArgs =["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", file.toPath()]
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = optimusExtension.classpath
-                        if (optimusExtension.tags != null)
-                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
-                                    file.toPath()]
-                        else
-                            args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", file.toPath()]
+                        args = cucumberArgs;
                         systemProperties = [
                                 "testFeed"      : optimusExtension.testFeed,
                                 "runMode"       : "Distribution",
