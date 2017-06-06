@@ -36,9 +36,6 @@ class DistributionTask extends DefaultTask {
         }
         featureFiles.forEach({ file -> System.out.println(file.getName()) })
         runFunctionalDistribution(optimusExtension, reportingExtension, udidList, featureFiles)
-        OptimusTearDown.updateBuildRecord()
-        OptimusTearDown.teardown()
-        new OptimusReport(project, reportingExtension).generateReport(false)
     }
 
 
@@ -47,7 +44,6 @@ class DistributionTask extends DefaultTask {
         println "pool size -- " + size
         def cucumberArgs;
         GParsPool.withPool(size) {
-            try {
                 allFiles.eachParallel { File file ->
                     if(optimusExtension.tags!=null)
                         cucumberArgs=["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
@@ -65,9 +61,6 @@ class DistributionTask extends DefaultTask {
                         ]
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace()
-            }
         }
     }
 }

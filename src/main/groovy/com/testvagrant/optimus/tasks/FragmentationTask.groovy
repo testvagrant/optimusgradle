@@ -28,9 +28,6 @@ class FragmentationTask extends DefaultTask {
         optimusSetup.setup(optimusExtension.testFeed)
         def run = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
         runDeviceFragmentation(run, optimusExtension, reportingExtension);
-        OptimusTearDown.updateBuildRecord();
-        OptimusTearDown.teardown();
-        new OptimusReport(project, reportingExtension).generateReport(true);
     }
 
     def runDeviceFragmentation(List<String> udidList, OptimusExtension extension, ReportingExtension reportingExtension) {
@@ -38,18 +35,11 @@ class FragmentationTask extends DefaultTask {
         def cucumberArgs
         println "Total devices -- " + size
         GParsPool.withPool(size) {
-            try {
                 udidList.eachParallel { String udid ->
-                    if (extension.tags != null)
-                        cucumberArgs = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
-                                "${project.projectDir}/src/test/resources/features"];
-                    else
-                        cucumberArgs = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
-                                "${project.projectDir}/src/test/resources/features"];
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = extension.classpath
-                        args = cucumberArgs
+                        args = getArgs(extension)
 
                         systemProperties = [
                                 "testFeed"      : extension.testFeed,
@@ -59,9 +49,6 @@ class FragmentationTask extends DefaultTask {
                         ]
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace()
-            }
         }
 
     }
@@ -97,5 +84,15 @@ class FragmentationTask extends DefaultTask {
     def String updateReportFileName(String name) {
         String[] deviceIdString = name.split(":");
         return deviceIdString.length > 1 ? "emulator_" + deviceIdString[0].substring(deviceIdString[0].lastIndexOf(".") + 1) : name;
+    }
+
+    def String[] getArgs(OptimusExtension optimusExtension) {
+        if(optimusExtension.tags!=null) {
+                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
+                                "${project.projectDir}/src/test/resources/features"];
+        } else {
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
+                                "${project.projectDir}/src/test/resources/features"];
+        }
     }
 }
