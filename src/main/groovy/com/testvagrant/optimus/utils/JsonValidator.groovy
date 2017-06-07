@@ -27,7 +27,7 @@ class JsonValidator {
         ProcessingReport report = schemaNode.validate(jsonNode);
         if (!report.isSuccess()) {
             throw new RuntimeException(testFeed + " is invalid!\n" +
-                    report.toString().)
+                    report.toString())
         }
     }
 
