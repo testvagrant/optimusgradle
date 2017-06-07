@@ -13,7 +13,11 @@ class OptimusSetupTask extends DefaultTask {
 
     @TaskAction
     def optimusSetup() {
-        OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
-        new OptimusSetup().setup(optimusExtension.testFeed);
+        try {
+            OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
+            new OptimusSetup().setup(optimusExtension.testFeed);
+        } finally {
+            MongoMain.closeMongo();
+        }
     }
 }

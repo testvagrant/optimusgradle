@@ -45,15 +45,10 @@ class DistributionTask extends DefaultTask {
         def cucumberArgs;
         GParsPool.withPool(size) {
                 allFiles.eachParallel { File file ->
-                    if(optimusExtension.tags!=null)
-                        cucumberArgs=["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
-                                          file.toPath()]
-                    else
-                        cucumberArgs =["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", file.toPath()]
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = optimusExtension.classpath
-                        args = cucumberArgs;
+                        args = getArgs(file,optimusExtension,reportingExtension);
                         systemProperties = [
                                 "testFeed"      : optimusExtension.testFeed,
                                 "runMode"       : "Distribution",
@@ -62,5 +57,13 @@ class DistributionTask extends DefaultTask {
                     }
                 }
         }
+    }
+
+    static def getArgs(File file, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
+        if(optimusExtension.tags!=null)
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
+                          file.toPath()]
+        else
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", file.toPath()]
     }
 }

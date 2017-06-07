@@ -27,19 +27,18 @@ class FragmentationTask extends DefaultTask {
         OptimusSetup optimusSetup = new OptimusSetup();
         optimusSetup.setup(optimusExtension.testFeed)
         def run = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
-        runDeviceFragmentation(run, optimusExtension, reportingExtension);
+        runDeviceFragmentation(run, optimusExtension,reportingExtension);
     }
 
     def runDeviceFragmentation(List<String> udidList, OptimusExtension extension, ReportingExtension reportingExtension) {
         def size = udidList.size()
-        def cucumberArgs
         println "Total devices -- " + size
         GParsPool.withPool(size) {
                 udidList.eachParallel { String udid ->
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
                         classpath = extension.classpath
-                        args = getArgs(extension)
+                        args = getArgs(udid,extension,reportingExtension)
 
                         systemProperties = [
                                 "testFeed"      : extension.testFeed,
@@ -53,41 +52,14 @@ class FragmentationTask extends DefaultTask {
 
     }
 
-    def generateReport(Boolean isFragmentation) {
-        def jsonReports = project.fileTree(dir: "${Reporting.baseDir}/cucumber/").include '**/*.json'.toString()
-        File reportOutputDirectory = new File("${Reporting.baseDir}/cucumber");
 
-        List<String> jsonReportFiles = new ArrayList<String>();
-        jsonReports.each { File file ->
-            jsonReportFiles.add("${Reporting.baseDir}/cucumber/${file.name}".toString());
-        }
-
-        String buildNumber = DateFormat.instance.format(new Date())
-        String projectName = "cucumberProject";
-        boolean runWithJenkins = false;
-        boolean parallelTesting = isFragmentation;
-
-        Configuration configuration = new Configuration(reportOutputDirectory, projectName);
-//optional configuration
-        configuration.setParallelTesting(parallelTesting);
-        configuration.setRunWithJenkins(runWithJenkins);
-        configuration.setBuildNumber(buildNumber);
-
-        ReportBuilder reportBuilder = new ReportBuilder(jsonReportFiles, configuration);
-        reportBuilder.generateReports();
-
-        println("\nReport available on: ${Reporting.baseDir}/cucumber/cucumber-html-reports/overview-features.html")
-
-    }
-
-
-    def String updateReportFileName(String name) {
+    static def String updateReportFileName(String name) {
         String[] deviceIdString = name.split(":");
         return deviceIdString.length > 1 ? "emulator_" + deviceIdString[0].substring(deviceIdString[0].lastIndexOf(".") + 1) : name;
     }
 
-    def String[] getArgs(OptimusExtension optimusExtension) {
-        if(optimusExtension.tags!=null) {
+    def getArgs(String udid, OptimusExtension extension, ReportingExtension reportingExtension) {
+        if(extension.tags!=null) {
                 return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
                                 "${project.projectDir}/src/test/resources/features"];
         } else {

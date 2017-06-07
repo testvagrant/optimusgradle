@@ -1,6 +1,8 @@
 package com.testvagrant.optimus.utils
 
+import com.testvagrant.monitor.MongoMain
 import com.testvagrant.monitor.radiator.MongoWriter
+import com.testvagrant.optimus.OptimusMain
 import com.testvagrant.optimus.ReportMain
 
 class OptimusTearDown{
@@ -10,6 +12,10 @@ class OptimusTearDown{
     }
 
     def static teardown() {
-        ReportMain.main();
+        try {
+            ReportMain.main();
+        } finally {
+            MongoMain.closeMongo();
+        }
     }
 }
