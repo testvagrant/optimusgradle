@@ -1,0 +1,131 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "executionDetails": {
+            "id": "/properties/executionDetails",
+            "properties": {
+                "appium_js_path": {
+                    "id": "/properties/executionDetails/properties/appium_js_path",
+                    "type": "string"
+                },
+                "appium_node_path": {
+                    "id": "/properties/executionDetails/properties/appium_node_path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "appium_js_path",
+                "appium_node_path"
+            ],
+            "type": "object"
+        },
+        "testFeed": {
+            "id": "/properties/testFeed",
+            "items": {
+                "id": "/properties/testFeed/items",
+                "properties": {
+                    "appDir": {
+                        "id": "/properties/testFeed/items/properties/appDir",
+                        "type": "string"
+                    },
+                    "belongsTo": {
+                        "id": "/properties/testFeed/items/properties/belongsTo",
+                        "type": "string"
+                    },
+                    "deviceState": {
+                        "id": "/properties/testFeed/items/properties/deviceState",
+                        "properties": {
+                            "captureVideo": {
+                                "id": "/properties/testFeed/items/properties/deviceState/properties/captureVideo",
+                                "type": "boolean"
+                            },
+                            "clearADBLogs": {
+                                "id": "/properties/testFeed/items/properties/deviceState/properties/clearADBLogs",
+                                "type": "boolean"
+                            },
+                            "clearNotification": {
+                                "id": "/properties/testFeed/items/properties/deviceState/properties/clearNotification",
+                                "type": "boolean"
+                            },
+                            "grantAllPermissions": {
+                                "id": "/properties/testFeed/items/properties/deviceState/properties/grantAllPermissions",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "optimusDesiredCapabilities": {
+                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities",
+                        "properties": {
+                            "androidOnlyCapabilities": {
+                                "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/androidOnlyCapabilities",
+                                "properties": {
+                                    "appActivity": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/androidOnlyCapabilities/properties/appActivity",
+                                        "type": "string"
+                                    },
+                                    "appPackage": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/androidOnlyCapabilities/properties/appPackage",
+                                        "type": "string"
+                                    },
+                                    "avdLaunchTimeout": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/androidOnlyCapabilities/properties/avdLaunchTimeout",
+                                        "type": "integer"
+                                    },
+                                    "useKeystore": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/androidOnlyCapabilities/properties/useKeystore",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "appPackage",
+                                    "appActivity"
+                                ],
+                                "type": "object"
+                            },
+                            "appiumServerCapabilities": {
+                                "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/appiumServerCapabilities",
+                                "properties": {
+                                    "app": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/appiumServerCapabilities/properties/app",
+                                        "type": "string"
+                                    },
+                                    "newCommandTimeout": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/appiumServerCapabilities/properties/newCommandTimeout",
+                                        "type": "integer"
+                                    },
+                                    "platformName": {
+                                        "id": "/properties/testFeed/items/properties/optimusDesiredCapabilities/properties/appiumServerCapabilities/properties/platformName",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "app",
+                                    "platformName"
+                                ],
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "runsOn": {
+                        "id": "/properties/testFeed/items/properties/runsOn",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "appDir"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "testFeed",
+        "executionDetails"
+    ],
+    "type": "object"
+}

@@ -11,10 +11,11 @@ class OptimusSetup {
     def setup(String testFeed) {
         println "Executing MongoMain"
         MongoMain.main();
-        new DeviceRegistrar().setUpDevices(new DeviceMatrix(testFeed + ".json"));
+        JsonValidator.validateTestFeed(testFeed + ".json")
+        new DeviceRegistrar().setUpDevices(new DeviceMatrix(testFeed + ".json"))
     }
 
-    def List<String> getDevicesForThisRun(Project project, String testFeedName) {
+    List<String> getDevicesForThisRun(Project project, String testFeedName) {
         new DeviceHelper(getAppJson(project, testFeedName)).getConnectedDevicesMatchingRunCriteria();
     }
 
@@ -29,10 +30,10 @@ class OptimusSetup {
 
     def List<String> getTags(String tags) {
         List<String> tagsList = new ArrayList<>();
-        if(tags==null)
+        if (tags == null)
             return tagsList;
-        if(tags.contains("~")){
-            if(tags.contains(",")){
+        if (tags.contains("~")) {
+            if (tags.contains(",")) {
                 throw new Exception("Cannot pass multiple tags with ~");
             }
             tagsList.add(tags);
