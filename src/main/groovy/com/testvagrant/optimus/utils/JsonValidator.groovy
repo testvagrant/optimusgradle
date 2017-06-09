@@ -7,8 +7,8 @@ import com.github.fge.jsonschema.core.exceptions.ProcessingException
 import com.github.fge.jsonschema.core.report.ProcessingReport
 import com.github.fge.jsonschema.main.JsonSchema
 import com.github.fge.jsonschema.main.JsonSchemaFactory
+import com.testvagrant.optimus.InvalidTestFeedJsonException
 import org.apache.commons.io.IOUtils
-import org.junit.Test
 
 /**
  * Created by abhishek on 05/06/17.
@@ -26,11 +26,19 @@ class JsonValidator {
 
         ProcessingReport report = schemaNode.validate(jsonNode);
         if (!report.isSuccess()) {
-            throw new RuntimeException(testFeed + " is invalid!\n" +
-                    report.toString())
+            throw new InvalidTestFeedJsonException(testFeed + " is invalid!\n" +
+                    getJsonValidationError(report.toString()))
         }
     }
 
+    static String getJsonValidationError(String s) {
+        String[] lines = s.split("\n")
+        for (String line:lines){
+            if (line.contains("missing"))
+                return line
+        }
+        return s
+    }
 
     static String getAppJson(String fileName) {
         String result = "";
