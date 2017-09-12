@@ -1,18 +1,11 @@
 package com.testvagrant.optimus.tasks
 
 import com.testvagrant.optimus.extensions.OptimusExtension
-import com.testvagrant.optimus.utils.OptimusReport
 import com.testvagrant.optimus.utils.OptimusSetup
-import com.testvagrant.optimus.utils.OptimusTearDown
 import groovyx.gpars.GParsPool
-import net.masterthought.cucumber.Configuration
-import net.masterthought.cucumber.ReportBuilder
 import org.gradle.api.DefaultTask
-import org.gradle.api.reporting.Reporting
 import org.gradle.api.reporting.ReportingExtension
 import org.gradle.api.tasks.TaskAction
-
-import java.text.DateFormat
 
 class FragmentationTask extends DefaultTask {
 
@@ -60,10 +53,10 @@ class FragmentationTask extends DefaultTask {
 
     def getArgs(String udid, OptimusExtension extension, ReportingExtension reportingExtension) {
         if(extension.tags!=null) {
-                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,
+                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,"-t","~@intent,~@Intent",
                                 "${project.projectDir}/src/test/resources/features"];
         } else {
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps",
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps","-t","~@intent,~@Intent",
                                 "${project.projectDir}/src/test/resources/features"];
         }
     }

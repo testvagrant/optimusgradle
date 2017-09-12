@@ -2,9 +2,7 @@ package com.testvagrant.optimus.tasks
 
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.FeatureFilter
-import com.testvagrant.optimus.utils.OptimusReport
 import com.testvagrant.optimus.utils.OptimusSetup
-import com.testvagrant.optimus.utils.OptimusTearDown
 import groovyx.gpars.GParsPool
 import org.gradle.api.DefaultTask
 import org.gradle.api.reporting.ReportingExtension
@@ -61,9 +59,9 @@ class DistributionTask extends DefaultTask {
 
     static def getArgs(File file, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
         if(optimusExtension.tags!=null)
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,"--tags","~@intent,~@Intent",
                           file.toPath()]
         else
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", file.toPath()]
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps","--tags","~@intent,~@Intent", file.toPath()]
     }
 }

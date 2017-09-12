@@ -1,13 +1,10 @@
 package com.testvagrant.optimus.tasks
 
-import com.testvagrant.monitor.MongoMain
+import com.testvagrant.devicemanagement.core.MongoMain
 import com.testvagrant.optimus.extensions.OptimusExtension
-import com.testvagrant.optimus.register.DeviceRegistrar
-import com.testvagrant.optimus.utils.DeviceMatrix
 import com.testvagrant.optimus.utils.OptimusSetup
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-
 
 class OptimusSetupTask extends DefaultTask {
 
