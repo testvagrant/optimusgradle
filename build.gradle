@@ -1,5 +1,4 @@
 group 'com.testvagrant.optimus'
-
 version '2.3-SNAPSHOT'
 
 apply plugin: 'groovy'
@@ -15,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.10'
+    compile 'org.codehaus.groovy:groovy-all:2.4.11'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
 }
@@ -37,21 +36,22 @@ buildscript {
     }
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
-        classpath "net.masterthought:cucumber-reporting:3.11.0"
+        classpath "net.masterthought:cucumber-reporting:3.3.0"
     }
 
 }
 
 
 dependencies {
-    compile('com.testvagrant.optimus:optimus:2.4-SNAPSHOT')
+    compile('com.testvagrant.optimus:optimus:2.3-SNAPSHOT')
     compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
-    compile group: 'io.cucumber', name: 'cucumber-junit', version: "2.1.0"
-    compile group: 'io.cucumber', name: 'cucumber-core', version: "2.1.0"
-    compile group: 'io.cucumber', name: 'cucumber-java', version: "2.1.0"
-    compile "net.masterthought:cucumber-reporting:3.11.0"
+    compile group: 'io.cucumber', name: 'cucumber-junit', version: "2.0.1"
+    compile group: 'io.cucumber', name: 'cucumber-core', version: '2.0.1'
+    compile group: 'io.cucumber', name: 'cucumber-java', version: "2.0.1"
+    compile "net.masterthought:cucumber-reporting:3.3.0"
 
 }
+
 
 // The configuration example below shows the minimum required properties
 // configured to publish your plugin to the plugin portal
@@ -59,7 +59,7 @@ pluginBundle {
     website = 'http://www.testvagrant.com/'
     vcsUrl = 'https://bitbucket.org/testvagrant/optimusgradle'
     description = 'Gradle Tasks for optimus'
-    tags = ['optimus', 'cucumber', 'mobile', 'automation', 'parallel', 'fragmentation']
+    tags = ['optimus', 'cucumber','mobile','automation','parallel','fragmentation']
 
     plugins {
         optimusPlugin {
