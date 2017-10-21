@@ -1,5 +1,5 @@
 group 'com.testvagrant.optimus'
-version '2.3-SNAPSHOT'
+version '2.2.0'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -35,7 +35,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
         classpath "net.masterthought:cucumber-reporting:3.3.0"
     }
 
@@ -43,7 +43,7 @@ buildscript {
 
 
 dependencies {
-    compile('com.testvagrant.optimus:optimus:2.3-SNAPSHOT')
+    compile('com.testvagrant:optimus:2.2.0')
     compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
     compile group: 'io.cucumber', name: 'cucumber-junit', version: "2.0.1"
     compile group: 'io.cucumber', name: 'cucumber-core', version: '2.0.1'
