@@ -1,5 +1,5 @@
 group 'com.testvagrant.optimus'
-version '2.2.0'
+version '2.2.1'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -36,7 +36,7 @@ buildscript {
     }
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
-        classpath "net.masterthought:cucumber-reporting:3.3.0"
+        classpath "net.masterthought:cucumber-reporting:3.11.0"
     }
 
 }

@@ -50,7 +50,8 @@ class DistributionTask extends DefaultTask {
                         systemProperties = [
                                 "testFeed"      : optimusExtension.testFeed,
                                 "runMode"       : "Distribution",
-                                "setupCompleted": "true"
+                                "setupCompleted": "true",
+                                "devMode"       : optimusExtension.devMode
                         ]
                     }
                 }

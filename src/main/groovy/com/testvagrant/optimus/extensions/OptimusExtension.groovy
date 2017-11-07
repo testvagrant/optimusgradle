@@ -8,6 +8,7 @@ class OptimusExtension {
     private String testFeed;
     private String tags;
     private FileCollection classpath;
+    private String devMode;
 
     String getTags() {
         return tags
@@ -31,5 +32,14 @@ class OptimusExtension {
 
     void setClasspath(FileCollection classpath) {
         this.classpath = classpath
+    }
+
+    String getDevMode() {
+        return devMode
+    }
+
+    void setDevMode(String devMode) {
+        println "Optimus Dev Mode"+devMode
+        this.devMode = devMode
     }
 }

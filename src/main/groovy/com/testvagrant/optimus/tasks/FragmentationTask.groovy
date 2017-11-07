@@ -37,7 +37,8 @@ class FragmentationTask extends DefaultTask {
                                 "testFeed"      : extension.testFeed,
                                 "udid"          : udid,
                                 "runMode"       : "Fragmentation",
-                                "setupCompleted": "true"
+                                "setupCompleted": "true",
+                                "devMode"       : extension.devMode
                         ]
                     }
                 }
