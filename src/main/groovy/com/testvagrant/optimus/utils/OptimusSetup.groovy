@@ -1,6 +1,6 @@
 package com.testvagrant.optimus.utils
 
-import com.testvagrant.devicemanagement.core.MongoMain
+import com.testvagrant.monitor.MongoMain
 import com.testvagrant.optimus.helpers.DeviceHelper
 import com.testvagrant.optimus.register.DeviceRegistrar
 import org.gradle.api.Project

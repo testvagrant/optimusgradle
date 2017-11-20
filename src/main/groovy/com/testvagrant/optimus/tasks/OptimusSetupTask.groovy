@@ -1,6 +1,6 @@
 package com.testvagrant.optimus.tasks
 
-import com.testvagrant.devicemanagement.core.MongoMain
+import com.testvagrant.monitor.MongoMain
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.OptimusSetup
 import org.gradle.api.DefaultTask
