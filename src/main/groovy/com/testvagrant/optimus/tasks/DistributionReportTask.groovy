@@ -16,8 +16,11 @@ class DistributionReportTask extends DefaultTask {
     @TaskAction
     def reportDistribution() {
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
-        OptimusTearDown.updateBuildRecord()
-        OptimusTearDown.teardown()
+       try {
+           OptimusTearDown.updateBuildRecord()
+           OptimusTearDown.teardown()
+       } catch (Exception e) {
+       }
         new OptimusReport(project,reportingExtension).generateReport(false);
     }
 }

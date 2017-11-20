@@ -16,8 +16,11 @@ class FragmentationReportTask extends DefaultTask {
     @TaskAction
     def fragmentationReport() {
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
-        OptimusTearDown.updateBuildRecord()
-        OptimusTearDown.teardown()
+        try {
+            OptimusTearDown.updateBuildRecord()
+            OptimusTearDown.teardown()
+        } catch (Exception e) {
+        }
         new OptimusReport(project,reportingExtension).generateReport(true);
     }
 }
