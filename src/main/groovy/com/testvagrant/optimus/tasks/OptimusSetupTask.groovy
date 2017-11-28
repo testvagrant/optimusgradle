@@ -1,11 +1,12 @@
 package com.testvagrant.optimus.tasks
 
 import com.testvagrant.monitor.MongoMain
-import com.testvagrant.monitor.radiator.MongoDriverService
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.OptimusSetup
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+
+import static com.testvagrant.monitor.radiator.MongoDriverService.mongoService
 
 class OptimusSetupTask extends DefaultTask {
 
@@ -14,8 +15,7 @@ class OptimusSetupTask extends DefaultTask {
         try {
             OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
             try {
-                MongoDriverService mongoDriverService = new MongoDriverService();
-                mongoDriverService.start();
+                mongoService().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

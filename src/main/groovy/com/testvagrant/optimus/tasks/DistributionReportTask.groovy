@@ -18,8 +18,10 @@ class DistributionReportTask extends DefaultTask {
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
        try {
            OptimusTearDown.updateBuildRecord()
-           OptimusTearDown.teardown()
        } catch (Exception e) {
+           e.printStackTrace();
+       } finally {
+           OptimusTearDown.teardown()
        }
         new OptimusReport(project,reportingExtension).generateReport(false);
     }
