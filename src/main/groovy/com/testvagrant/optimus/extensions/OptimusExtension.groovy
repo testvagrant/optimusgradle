@@ -9,6 +9,7 @@ class OptimusExtension {
     private String tags;
     private FileCollection classpath;
     private String devMode;
+    private String regression;
 
     String getTags() {
         return tags
@@ -39,7 +40,14 @@ class OptimusExtension {
     }
 
     void setDevMode(String devMode) {
-        println "Optimus Dev Mode"+devMode
         this.devMode = devMode
+    }
+
+    String getRegression() {
+        return regression
+    }
+
+    void setRegression(String regression) {
+        this.regression = regression
     }
 }

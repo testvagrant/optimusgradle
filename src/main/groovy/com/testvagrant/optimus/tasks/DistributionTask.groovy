@@ -51,7 +51,8 @@ class DistributionTask extends DefaultTask {
                                 "testFeed"      : optimusExtension.testFeed,
                                 "runMode"       : "Distribution",
                                 "setupCompleted": "true",
-                                "devMode"       : optimusExtension.devMode
+                                "devMode"       : optimusExtension.devMode,
+                                "regression"    : optimusExtension.regression
                         ]
                     }
                 }
@@ -60,9 +61,9 @@ class DistributionTask extends DefaultTask {
 
     static def getArgs(File file, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
         if(optimusExtension.tags!=null)
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,"--tags","~@intent,~@Intent",
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,"--tags","~@intent,~@Intent,~@dataIntent,~@DataIntent",
                           file.toPath()]
         else
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps","--tags","~@intent,~@Intent", file.toPath()]
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps","--tags","~@intent,~@Intent,~@dataIntent,~@DataIntent", file.toPath()]
     }
 }

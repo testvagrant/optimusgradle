@@ -23,22 +23,23 @@ class FragmentationTask extends DefaultTask {
         runDeviceFragmentation(run, optimusExtension,reportingExtension);
     }
 
-    def runDeviceFragmentation(List<String> udidList, OptimusExtension extension, ReportingExtension reportingExtension) {
+    def runDeviceFragmentation(List<String> udidList, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
         def size = udidList.size()
         println "Total devices -- " + size
         GParsPool.withPool(size) {
                 udidList.eachParallel { String udid ->
                     project.javaexec {
                         main = "cucumber.api.cli.Main"
-                        classpath = extension.classpath
-                        args = getArgs(udid,extension,reportingExtension)
+                        classpath = optimusExtension.classpath
+                        args = getArgs(udid,optimusExtension,reportingExtension)
 
                         systemProperties = [
-                                "testFeed"      : extension.testFeed,
+                                "testFeed"      : optimusExtension.testFeed,
                                 "udid"          : udid,
                                 "runMode"       : "Fragmentation",
                                 "setupCompleted": "true",
-                                "devMode"       : extension.devMode
+                                "devMode"       : optimusExtension.devMode,
+                                "regression"    : optimusExtension.regression
                         ]
                     }
                 }
@@ -52,12 +53,12 @@ class FragmentationTask extends DefaultTask {
         return deviceIdString.length > 1 ? "emulator_" + deviceIdString[0].substring(deviceIdString[0].lastIndexOf(".") + 1) : name;
     }
 
-    def getArgs(String udid, OptimusExtension extension, ReportingExtension reportingExtension) {
-        if(extension.tags!=null) {
-                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", extension.tags,"-t","~@intent,~@Intent",
+    def getArgs(String udid, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
+        if(optimusExtension.tags!=null) {
+                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", optimusExtension.tags,"-t","~@intent,~@Intent,~@dataIntent,~@DataIntent",
                                 "${project.projectDir}/src/test/resources/features"];
         } else {
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps","-t","~@intent,~@Intent",
+            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps","-t","~@intent,~@Intent,~@dataIntent,~@DataIntent",
                                 "${project.projectDir}/src/test/resources/features"];
         }
     }
