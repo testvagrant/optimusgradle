@@ -52,7 +52,8 @@ class DistributionTask extends DefaultTask {
                                 "runMode"       : "Distribution",
                                 "setupCompleted": "true",
                                 "devMode"       : optimusExtension.devMode,
-                                "regression"    : optimusExtension.regression
+                                "regression"    : optimusExtension.regression,
+                                "env"           : optimusExtension.env
                         ]
                     }
                 }

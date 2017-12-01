@@ -10,6 +10,7 @@ class OptimusExtension {
     private FileCollection classpath;
     private String devMode;
     private String regression;
+    private String env;
 
     String getTags() {
         return tags
@@ -49,5 +50,13 @@ class OptimusExtension {
 
     void setRegression(String regression) {
         this.regression = regression
+    }
+
+    String getEnv() {
+        return env
+    }
+
+    void setEnv(String env) {
+        this.env = env
     }
 }

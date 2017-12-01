@@ -39,7 +39,8 @@ class FragmentationTask extends DefaultTask {
                                 "runMode"       : "Fragmentation",
                                 "setupCompleted": "true",
                                 "devMode"       : optimusExtension.devMode,
-                                "regression"    : optimusExtension.regression
+                                "regression"    : optimusExtension.regression,
+                                "env"           : optimusExtension.env
                         ]
                     }
                 }
