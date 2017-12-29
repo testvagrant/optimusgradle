@@ -5,13 +5,12 @@ import com.testvagrant.optimus.helpers.DeviceHelper
 import com.testvagrant.optimus.register.DeviceRegistrar
 import org.gradle.api.Project
 
-
 class OptimusSetup {
 
     def setup(String testFeed) {
         println "Executing MongoMain"
-        MongoMain.main();
         JsonValidator.validateTestFeed(testFeed + ".json")
+        new MongoMain(testFeed).createOptimusDb()
         new DeviceRegistrar().setUpDevices(new DeviceMatrix(testFeed + ".json"))
     }
 
