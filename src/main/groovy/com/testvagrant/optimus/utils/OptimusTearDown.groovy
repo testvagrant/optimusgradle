@@ -9,6 +9,7 @@ class OptimusTearDown {
         new BuildsServiceImpl().notifyBuildEnd();
         println "updating build unique scenario count"
         new BuildsServiceImpl().updateBuildWithUniqueScenarios();
+        new BuildsServiceImpl().createCrashCollection();
     }
 
     def static teardown() {
