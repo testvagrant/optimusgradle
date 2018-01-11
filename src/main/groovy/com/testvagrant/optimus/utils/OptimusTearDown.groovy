@@ -15,8 +15,9 @@ class OptimusTearDown {
     def static teardown() {
         try {
             ReportMain.main();
-        } finally {
-//           new MongoMain().closeMongo();
+        } catch (Exception e) {
+
         }
     }
+
 }

@@ -9,7 +9,7 @@ import org.gradle.api.tasks.TaskAction
 
 class FragmentationReportTask extends DefaultTask {
 
-    public FragmentationReportTask() {
+    FragmentationReportTask() {
         outputs.upToDateWhen {false}
     }
 

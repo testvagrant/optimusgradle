@@ -6,16 +6,15 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.reporting.ReportingExtension
 import org.gradle.api.tasks.TaskAction
 
-
 class DistributionReportTask extends DefaultTask {
 
-    public DistributionReportTask() {
+    DistributionReportTask() {
         outputs.upToDateWhen {false}
     }
 
     @TaskAction
     def reportDistribution() {
-        ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
+        ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class)
        try {
            OptimusTearDown.updateBuildRecord()
        } catch (Exception e) {

@@ -7,6 +7,7 @@ import org.gradle.api.Project
 
 class OptimusSetup {
 
+
     def setup(String testFeed) {
         println "Executing MongoMain"
         JsonValidator.validateTestFeed(testFeed + ".json")

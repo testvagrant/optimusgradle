@@ -1,6 +1,5 @@
 package com.testvagrant.optimus.tasks
 
-import com.testvagrant.monitor.MongoMain
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.utils.OptimusSetup
 import org.gradle.api.DefaultTask
@@ -15,9 +14,6 @@ class OptimusSetupTask extends DefaultTask {
             new OptimusSetup().setup(optimusExtension.testFeed);
         } catch (Exception e) {
 
-        }
-        finally {
-            new MongoMain(optimusExtension.testFeed).closeMongo();
         }
     }
 }

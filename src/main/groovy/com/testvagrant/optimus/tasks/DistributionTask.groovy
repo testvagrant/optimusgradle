@@ -32,6 +32,7 @@ class DistributionTask extends DefaultTask {
         else {
             featureFiles = featureFilesList
         }
+        println "Feature files size "+featureFiles.size()
         featureFiles.forEach({ file -> System.out.println(file.getName()) })
         runFunctionalDistribution(optimusExtension, reportingExtension, udidList, featureFiles)
     }
