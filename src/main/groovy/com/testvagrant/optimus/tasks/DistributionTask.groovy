@@ -43,28 +43,31 @@ class DistributionTask extends DefaultTask {
         println "pool size -- " + size
         def cucumberArgs;
         GParsPool.withPool(size) {
-                allFiles.eachParallel { File file ->
-                    project.javaexec {
-                        main = "cucumber.api.cli.Main"
-                        classpath = optimusExtension.classpath
-                        args = getArgs(file,optimusExtension,reportingExtension);
-                        systemProperties = [
-                                "testFeed"      : optimusExtension.testFeed,
-                                "runMode"       : "Distribution",
-                                "setupCompleted": "true",
-                                "devMode"       : optimusExtension.devMode,
-                                "regression"    : optimusExtension.regression,
-                                "env"           : optimusExtension.env
-                        ]
-                    }
+            allFiles.eachParallel { File file ->
+                project.javaexec {
+                    main = "cucumber.api.cli.Main"
+                    classpath = optimusExtension.classpath
+                    args = getArgs(file,optimusExtension,reportingExtension);
+                    systemProperties = [
+                            "testFeed"      : optimusExtension.testFeed,
+                            "runMode"       : "Distribution",
+                            "setupCompleted": "true",
+                            "devMode"       : optimusExtension.devMode,
+                            "regression"    : optimusExtension.regression,
+                            "env"           : optimusExtension.env
+                    ]
                 }
+            }
         }
+
     }
 
     static def getArgs(File file, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
+        println optimusExtension.tags
+        println reportingExtension.baseDir
         if(optimusExtension.tags!=null)
             return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps", "--tags", optimusExtension.tags,"--tags","~@intent,~@Intent,~@dataIntent,~@DataIntent",
-                          file.toPath()]
+                    file.toPath()]
         else
             return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/${file.name}.json"), "--glue", "steps","--tags","~@intent,~@Intent,~@dataIntent,~@DataIntent", file.toPath()]
     }
