@@ -1,6 +1,7 @@
 package com.testvagrant.optimus.tasks
 
 import com.testvagrant.optimus.extensions.OptimusExtension
+import com.testvagrant.optimus.extensions.OptimusServiceExtension
 import com.testvagrant.optimus.utils.FeatureFilter
 import com.testvagrant.optimus.utils.OptimusSetup
 import groovyx.gpars.GParsPool
@@ -19,6 +20,7 @@ class DistributionTask extends DefaultTask {
     @TaskAction
     def runDistribution() {
         OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class)
+        OptimusServiceExtension serviceExtension = project.getExtensions().findByType(OptimusServiceExtension.class)
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class)
         OptimusSetup optimusSetup = new OptimusSetup()
         optimusSetup.setup(optimusExtension.testFeed)
@@ -34,11 +36,11 @@ class DistributionTask extends DefaultTask {
         }
         println "Feature files size "+featureFiles.size()
         featureFiles.forEach({ file -> System.out.println(file.getName()) })
-        runFunctionalDistribution(optimusExtension, reportingExtension, udidList, featureFiles)
+        runFunctionalDistribution(optimusExtension, serviceExtension,reportingExtension, udidList, featureFiles)
     }
 
 
-    def runFunctionalDistribution(OptimusExtension optimusExtension, ReportingExtension reportingExtension, List<String> udidList, List<File> allFiles) {
+    def runFunctionalDistribution(OptimusExtension optimusExtension, OptimusServiceExtension serviceExtension,ReportingExtension reportingExtension, List<String> udidList, List<File> allFiles) {
         def size = udidList.size()
         println "pool size -- " + size
         def cucumberArgs;
@@ -54,7 +56,9 @@ class DistributionTask extends DefaultTask {
                             "setupCompleted": "true",
                             "devMode"       : optimusExtension.devMode,
                             "regression"    : optimusExtension.regression,
-                            "env"           : optimusExtension.env
+                            "env"           : optimusExtension.env,
+                            "database"      : serviceExtension.database,
+                            "uri"           : serviceExtension.uri
                     ]
                 }
             }

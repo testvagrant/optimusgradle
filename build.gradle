@@ -1,5 +1,5 @@
 group 'com.testvagrant.optimus'
-version '2.3.1'
+version '2.3.2'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -42,7 +42,7 @@ buildscript {
 
 
 dependencies {
-    compile group: 'com.testvagrant', name: 'optimus', version: '2.3.3-beta'
+    compile group: 'com.testvagrant', name: 'optimus', version: '2.3.2-beta'
     compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
     compile group: 'io.cucumber', name: 'cucumber-junit', version: "2.0.1"
     compile group: 'io.cucumber', name: 'cucumber-core', version: '2.0.1'

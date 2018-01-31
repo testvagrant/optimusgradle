@@ -1,6 +1,7 @@
 package com.testvagrant.optimus.tasks
 
 import com.testvagrant.optimus.extensions.OptimusExtension
+import com.testvagrant.optimus.extensions.OptimusServiceExtension
 import com.testvagrant.optimus.utils.OptimusSetup
 import groovyx.gpars.GParsPool
 import org.gradle.api.DefaultTask
@@ -17,13 +18,14 @@ class FragmentationTask extends DefaultTask {
     def runFragmentation() {
         OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
+        OptimusServiceExtension serviceExtension = project.getExtensions().findByType(OptimusServiceExtension.class)
         OptimusSetup optimusSetup = new OptimusSetup();
         optimusSetup.setup(optimusExtension.testFeed)
         def run = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
-        runDeviceFragmentation(run, optimusExtension,reportingExtension);
+        runDeviceFragmentation(run, optimusExtension,serviceExtension,reportingExtension);
     }
 
-    def runDeviceFragmentation(List<String> udidList, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
+    def runDeviceFragmentation(List<String> udidList, OptimusExtension optimusExtension, OptimusServiceExtension serviceExtension,ReportingExtension reportingExtension) {
         def size = udidList.size()
         println "Total devices -- " + size
         GParsPool.withPool(size) {
@@ -40,7 +42,9 @@ class FragmentationTask extends DefaultTask {
                                 "setupCompleted": "true",
                                 "devMode"       : optimusExtension.devMode,
                                 "regression"    : optimusExtension.regression,
-                                "env"           : optimusExtension.env
+                                "env"           : optimusExtension.env,
+                                "database"      : serviceExtension.database,
+                                "uri"           : serviceExtension.uri
                         ]
                     }
                 }
