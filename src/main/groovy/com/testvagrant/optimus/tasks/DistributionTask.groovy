@@ -46,21 +46,23 @@ class DistributionTask extends DefaultTask {
         def cucumberArgs;
         GParsPool.withPool(size) {
             allFiles.eachParallel { File file ->
-                project.javaexec {
-                    main = "cucumber.api.cli.Main"
-                    classpath = optimusExtension.classpath
-                    args = getArgs(file,optimusExtension,reportingExtension);
-                    systemProperties = [
-                            "testFeed"      : optimusExtension.testFeed,
-                            "runMode"       : "Distribution",
-                            "setupCompleted": "true",
-                            "devMode"       : optimusExtension.devMode,
-                            "regression"    : optimusExtension.regression,
-                            "env"           : optimusExtension.env,
-                            "database"      : serviceExtension.database,
-                            "uri"           : serviceExtension.uri
-                    ]
-                }
+                    project.javaexec {
+                        main = "cucumber.api.cli.Main"
+                        classpath = optimusExtension.classpath
+                        args = getArgs(file,optimusExtension,reportingExtension)
+                        ignoreExitValue = true
+                        systemProperties = [
+                                "testFeed"      : optimusExtension.testFeed,
+                                "runMode"       : "Distribution",
+                                "setupCompleted": "true",
+                                "devMode"       : optimusExtension.devMode,
+                                "regression"    : optimusExtension.regression,
+                                "env"           : optimusExtension.env,
+                                "database"      : serviceExtension.database,
+                                "uri"           : serviceExtension.uri
+                        ]
+                    }
+
             }
         }
 

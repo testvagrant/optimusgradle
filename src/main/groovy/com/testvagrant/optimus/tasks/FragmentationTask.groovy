@@ -34,7 +34,7 @@ class FragmentationTask extends DefaultTask {
                         main = "cucumber.api.cli.Main"
                         classpath = optimusExtension.classpath
                         args = getArgs(udid,optimusExtension,reportingExtension)
-
+                        ignoreExitValue = true
                         systemProperties = [
                                 "testFeed"      : optimusExtension.testFeed,
                                 "udid"          : udid,
