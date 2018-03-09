@@ -3,11 +3,10 @@ package com.testvagrant.optimus.utils
 import net.masterthought.cucumber.Configuration
 import net.masterthought.cucumber.ReportBuilder
 import org.gradle.api.Project
-import org.gradle.api.reporting.Reporting
 import org.gradle.api.reporting.ReportingExtension
+import org.testng.Assert
 
 import java.text.DateFormat
-
 
 class OptimusReport {
 
@@ -39,9 +38,8 @@ class OptimusReport {
         configuration.setBuildNumber(buildNumber);
 
         ReportBuilder reportBuilder = new ReportBuilder(jsonReportFiles, configuration);
-        reportBuilder.generateReports();
-
+        def reports = reportBuilder.generateReports();
         println("\nReport available on: ${reportingExtension.baseDir}/cucumber/cucumber-html-reports/overview-features.html")
-
+        Assert.assertEquals(reports.failedFeatures,0,"There are failed feature files. Marking build as a failure")
     }
 }
