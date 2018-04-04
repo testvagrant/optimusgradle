@@ -28,6 +28,7 @@ class DistributionTask extends DefaultTask {
         List<String> tags = optimusSetup.getTags(optimusExtension.tags)
         FeatureFilter featureFilter = new FeatureFilter(tags)
         List<File> featureFilesList = featureFilter.collectAllFeatureFilesInProject(getProject().getProjectDir().listFiles())
+        
         if (tags.size() > 0) {
             featureFiles = featureFilter.getFilteredFeatures(featureFilesList)
         }
