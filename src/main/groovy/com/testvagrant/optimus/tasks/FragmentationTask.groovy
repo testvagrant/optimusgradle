@@ -2,6 +2,7 @@ package com.testvagrant.optimus.tasks
 
 import com.testvagrant.optimus.extensions.OptimusExtension
 import com.testvagrant.optimus.extensions.OptimusServiceExtension
+import com.testvagrant.optimus.utils.OptimusHelper
 import com.testvagrant.optimus.utils.OptimusSetup
 import groovyx.gpars.GParsPool
 import org.gradle.api.DefaultTask
@@ -19,13 +20,14 @@ class FragmentationTask extends DefaultTask {
         OptimusExtension optimusExtension = project.getExtensions().findByType(OptimusExtension.class);
         ReportingExtension reportingExtension = project.getExtensions().findByType(ReportingExtension.class);
         OptimusServiceExtension serviceExtension = project.getExtensions().findByType(OptimusServiceExtension.class)
-        OptimusSetup optimusSetup = new OptimusSetup();
-        optimusSetup.setup(optimusExtension.testFeed)
-        def run = optimusSetup.getDevicesForThisRun(project, optimusExtension.testFeed)
+        OptimusHelper.setupServiceEnvoirment(serviceExtension)
+        OptimusHelper.setup(project,optimusExtension,serviceExtension)
+        def run = new OptimusSetup().getDevicesForThisRun(project, optimusExtension.testFeed)
         runDeviceFragmentation(run, optimusExtension,serviceExtension,reportingExtension);
     }
 
     def runDeviceFragmentation(List<String> udidList, OptimusExtension optimusExtension, OptimusServiceExtension serviceExtension,ReportingExtension reportingExtension) {
+        OptimusServiceExtension optimusServiceExtension = project.getExtensions().findByType(OptimusServiceExtension.class);
         def size = udidList.size()
         println "Total devices -- " + size
         GParsPool.withPool(size) {
@@ -44,7 +46,8 @@ class FragmentationTask extends DefaultTask {
                                 "regression"    : optimusExtension.regression,
                                 "env"           : optimusExtension.env,
                                 "database"      : serviceExtension.database,
-                                "uri"           : serviceExtension.uri
+                                "uri"           : serviceExtension.uri,
+                                "serviceUrl"    : OptimusHelper.getServiceUrl(optimusServiceExtension)
                         ]
                     }
                 }

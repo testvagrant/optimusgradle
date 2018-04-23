@@ -7,6 +7,10 @@ import org.gradle.api.Project
 
 class OptimusSetup {
 
+    static void main(String[] args) {
+        OptimusSetup optimusSetup = new OptimusSetup();
+        optimusSetup.setup(args[0])
+    }
 
     def setup(String testFeed) {
         println "Executing MongoMain"
@@ -16,16 +20,8 @@ class OptimusSetup {
     }
 
     List<String> getDevicesForThisRun(Project project, String testFeedName) {
-        new DeviceHelper(getAppJson(project, testFeedName)).getConnectedDevicesMatchingRunCriteria();
-    }
 
-    private String getAppJson(Project project, String testfeedName) {
-        File file = new File(project.projectDir.toString() + "/src/test/resources/" + testfeedName + ".json");
-        println file.getAbsolutePath()
-        if (file.exists()) {
-            return file.text
-        }
-        return ''
+        new DeviceHelper(getAppJson(project, testFeedName)).getConnectedDevicesMatchingRunCriteria();
     }
 
     def List<String> getTags(String tags) {
@@ -47,4 +43,16 @@ class OptimusSetup {
         tagsList.stream().forEach({ item -> item.toString().replaceAll("\\s", "") });
         return tagsList;
     }
+
+    private String getAppJson(Project project, String testfeedName) {
+        File file = new File(project.projectDir.toString() + "/src/test/resources/" + testfeedName + ".json");
+        println file.getAbsolutePath()
+        if (file.exists()) {
+            return file.text
+        }
+        return ''
+    }
+
+
+
 }
