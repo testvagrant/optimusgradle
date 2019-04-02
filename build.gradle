@@ -39,18 +39,20 @@ buildscript {
     }
 }
 
+//ext.cukesVersion = '4.2.6'
+
 
 dependencies {
-    compile group: 'com.testvagrant', name: 'optimus', version: '2.3.7-beta'
+//    compile group: 'com.testvagrant', name: 'optimus', version: '3.1.0'
+    implementation 'com.testvagrant:optimus:3.1.0'
     compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
-    compile group: 'io.cucumber', name: 'cucumber-junit', version: "2.0.1"
-    compile group: 'io.cucumber', name: 'cucumber-core', version: '2.0.1'
-    compile group: 'io.cucumber', name: 'cucumber-java', version: "2.0.1"
+//    compile group: 'io.cucumber', name: 'cucumber-junit', version: "$cukesVersion"
+//    compile group: 'io.cucumber', name: 'cucumber-core', version: "$cukesVersion"
+//    compile group: 'io.cucumber', name: 'cucumber-java', version: "$cukesVersion"
     compile "net.masterthought:cucumber-reporting:3.3.0"
     compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.4.2'
     compile group: 'org.testng', name: 'testng', version: '6.14.2'
 }
-
 
 // The configuration example below shows the minimum required properties
 // configured to publish your plugin to the plugin portal
@@ -58,7 +60,7 @@ pluginBundle {
     website = 'http://www.testvagrant.com/'
     vcsUrl = 'https://bitbucket.org/testvagrant/optimusgradle'
     description = 'Gradle Tasks for optimus'
-    tags = ['optimus', 'cucumber','mobile','automation','parallel','fragmentation']
+    tags = ['optimus', 'cucumber', 'mobile', 'automation', 'parallel', 'fragmentation']
 
     plugins {
         optimusPlugin {
