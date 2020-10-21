@@ -11,6 +11,15 @@ class OptimusExtension {
     private String devMode;
     private String regression;
     private String env;
+    private String cucumberListener;
+
+    String getCucumberListener() {
+        return cucumberListener
+    }
+
+    void setCucumberListener(String cucumberListener) {
+        this.cucumberListener = cucumberListener
+    }
 
     String getTags() {
         return tags

@@ -62,12 +62,21 @@ class FragmentationTask extends DefaultTask {
     }
 
     def getArgs(String udid, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
-        if(optimusExtension.tags!=null) {
-                return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps", "-t", optimusExtension.tags,"-t","~@intent,~@Intent,~@dataIntent,~@DataIntent",
-                                "${project.projectDir}/src/test/resources/features"];
-        } else {
-            return ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json"), "--glue", "steps","-t","~@intent,~@Intent,~@dataIntent,~@DataIntent",
-                                "${project.projectDir}/src/test/resources/features"];
+        List<String> args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json")]
+        if(optimusExtension.cucumberListener!=null || optimusExtension.cucumberListener!="")
+        {
+            args.add("-p")
+            args.add(optimusExtension.cucumberListener)
         }
+        args.add("--glue")
+        args.add("steps")
+        if(optimusExtension.tags!=null) {
+            args.add("-t")
+            args.add(optimusExtension.tags)
+        }
+        args.add("-t")
+        args.add("~@intent,~@Intent,~@dataIntent,~@DataIntent")
+        args.add("${project.projectDir}/src/test/resources/features")
+        return args
     }
 }
