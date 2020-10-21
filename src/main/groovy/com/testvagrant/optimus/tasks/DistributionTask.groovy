@@ -66,7 +66,7 @@ class DistributionTask extends DefaultTask {
     }
 
     def getArgs(String udid, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
-        List<String> args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json")]
+        List<String> args = ["-p", "pretty", "-p",("json:${reportingExtension.baseDir}/cucumber-report.json"),"-p","timeline:${reportingExtension.baseDir}/timeline/"]
         if(optimusExtension.cucumberListener!=null || optimusExtension.cucumberListener!="")
         {
             args.add("-p")
