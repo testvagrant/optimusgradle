@@ -6,6 +6,7 @@ import org.gradle.api.file.FileCollection
 class OptimusExtension {
 
     private String testFeed;
+    private String appiumHost;
     private String tags;
     private FileCollection classpath;
     private String devMode;
@@ -19,6 +20,14 @@ class OptimusExtension {
 
     void setCucumberListener(String cucumberListener) {
         this.cucumberListener = cucumberListener
+    }
+
+    String getAppiumHost() {
+        return appiumHost
+    }
+
+    void setAppiumHost(String appiumHost) {
+        this.appiumHost = appiumHost
     }
 
     String getTags() {

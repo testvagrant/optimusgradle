@@ -45,6 +45,7 @@ class FragmentationTask extends DefaultTask {
                                 "devMode"       : optimusExtension.devMode,
                                 "regression"    : optimusExtension.regression,
                                 "env"           : optimusExtension.env,
+                                "appiumHost"    : optimusExtension.appiumHost,
                                 "database"      : serviceExtension.database,
                                 "uri"           : serviceExtension.uri,
                                 "serviceUrl"    : OptimusHelper.getServiceUrl(optimusServiceExtension)
