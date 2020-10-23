@@ -64,7 +64,7 @@ class FragmentationTask extends DefaultTask {
 
     def getArgs(String udid, OptimusExtension optimusExtension, ReportingExtension reportingExtension) {
         List<String> args = ["-p", "pretty", "-p", ("json:${reportingExtension.baseDir}/cucumber/" + updateReportFileName(udid) + ".json")]
-        if(optimusExtension.cucumberListener!=null || optimusExtension.cucumberListener!="")
+        if(optimusExtension.cucumberListener!=null && optimusExtension.cucumberListener!="")
         {
             args.add("-p")
             args.add(optimusExtension.cucumberListener)

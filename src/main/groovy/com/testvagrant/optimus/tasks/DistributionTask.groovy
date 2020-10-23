@@ -70,7 +70,7 @@ class DistributionTask extends DefaultTask {
         println optimusExtension.tags
         println reportingExtension.baseDir
         List<String> args = ["-p", "pretty", "-p",("json:${reportingExtension.baseDir}/cucumber-report.json"),"-p","timeline:${reportingExtension.baseDir}/timeline/"]
-        if(optimusExtension.cucumberListener!=null || optimusExtension.cucumberListener!="")
+        if(optimusExtension.cucumberListener!=null && optimusExtension.cucumberListener!="")
         {
             args.add("-p")
             args.add(optimusExtension.cucumberListener)
