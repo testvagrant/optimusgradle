@@ -66,6 +66,8 @@ class DistributionTask extends DefaultTask {
     }
 
     def getArgs(OptimusExtension optimusExtension, ReportingExtension reportingExtension, int size) {
+        println optimusExtension.tags
+        println reportingExtension.baseDir
         List<String> args = ["-p", "pretty", "-p",("json:${reportingExtension.baseDir}/cucumber-report.json"),"-p","timeline:${reportingExtension.baseDir}/timeline/"]
         if(optimusExtension.cucumberListener!=null || optimusExtension.cucumberListener!="")
         {
@@ -74,11 +76,13 @@ class DistributionTask extends DefaultTask {
         }
         args.add("--glue")
         args.add("steps")
+        args.add("--threads")
+        args.add(size)
         if(optimusExtension.tags!=null) {
-            args.add("-t")
+            args.add("--tags")
             args.add(optimusExtension.tags)
         }
-        args.add("-t")
+        args.add("--tags")
         args.add("~@intent,~@Intent,~@dataIntent,~@DataIntent")
         args.add("${project.projectDir}/src/test/resources/features")
         return args
