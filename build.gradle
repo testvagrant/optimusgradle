@@ -1,5 +1,5 @@
 group 'com.testvagrant.optimus'
-version '3.1.0'
+version '3.1.1'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.12'
+    compile 'org.codehaus.groovy:groovy-all:2.5.11'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
 }
@@ -34,7 +34,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.12.0"
         classpath "net.masterthought:cucumber-reporting:3.11.0"
     }
 }
